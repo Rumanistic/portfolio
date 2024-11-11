@@ -38,13 +38,13 @@ function App() {
     }, transitionDuration);
   };
 
-  const path = window.location.pathname;
-  if(path.startsWith('/frontend')) {
+  const path = window.location.hash;
+  if(path.startsWith('#/frontend')) {
     stackParam = 'front';
     stackColor = '#FAF2DE'
   }
 
-  if(path.startsWith('/backend')) {
+  if(path.startsWith('#/backend')) {
     stackParam = 'back';
     stackColor = '#F0E8FF'
   }

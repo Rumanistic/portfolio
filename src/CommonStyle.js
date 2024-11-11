@@ -2,26 +2,27 @@ import styled from 'styled-components';
 
 // app 전체 스타일링
 export const Application = styled.div`
-  background-image: url('./resources/images/bg.jpg');
-  background-size: cover;
+  background-color: #000000;
+  // background-image: url('./resources/images/bg.jpg');
+  // background-size: cover;
   text-align: center;
 `;
 
 // 어사이드 메뉴 바 스타일링
 export const ContentAside = styled.aside`
-    position: fixed;
-    left: 5vw;
-    width: 15vw;
-    height: 100vh;
-    display: flex;
-    background-color: rgba(240,240,240,0.8);
-    color: #333333;
-    flex-flow: column;
+  position: fixed;
+  left: 5vw;
+  width: 15vw;
+  height: 100vh;
+  display: flex;
+  background-color: #6e6e6e;
+  color: #eeeeee;
+  flex-flow: column;
 `;
 
 export const AsideContainer = styled.div`
   padding-top: 10vh;
-  ${(props) => (props.selected && 'background-color: #d0e8ff;')};
+  ${(props) => (props.selected && `background-color: ${props.stackColor}; color: #000000;`)};
   transition: background-color 0.3s;
 `;
 
@@ -49,11 +50,12 @@ export const MenuContainer = styled.ul`
 
 // 메뉴 스타일링
 export const MenuContent = styled.li`
-    padding: 0.2vh 0;
-    font-size: 1.2vmin;
-    ${(props) => (props.selected && 'background-color: #d0e8ff; font-size: 2vmin')};
-    cursor: pointer;
-    transition: background-color 0.3s, font-size 0.3s;
+  font-family: 'jua-regular';
+  padding: 0.2vh 0;
+  font-size: 1.2vmin;
+  ${(props) => (props.selected && `background-color: ${props.stackColor}; color: #000000; font-size: 2.5vmin`)};
+  cursor: pointer;
+  transition: background-color 0.3s, font-size 0.3s;
 `;
 
 export const ContentDiv = styled.div`
@@ -65,7 +67,7 @@ export const ContentDiv = styled.div`
   text-align: left;
   width: 70vw;
   min-height: 100vh;
-  background-color: rgba(249, 249, 225);
+  background-color: ${(params) => params.stackColor};
   height: 100vh;
   overflow-y: auto;
 `;
@@ -73,6 +75,7 @@ export const ContentDiv = styled.div`
 export const ContentSection = styled.section`
   display: flex;
   flex-flow: column;
+  justify-content: space-evenly;
   padding: 0 2vw;
   height: 100vh;
 `;

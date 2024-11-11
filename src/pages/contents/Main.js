@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import * as Common from '../../CommonStyle';
 import * as Content from '../../ContentStyle';
 
-function Main({onScrollEnd}) {
+function Main({onScrollEnd, stackColor}) {
     const contentRef = useRef();
 
     const handleWheel = (e) => {
@@ -28,10 +28,14 @@ function Main({onScrollEnd}) {
         <Common.ContentDiv
             ref={contentRef}
             onWheel={handleWheel}
+            stackColor={stackColor}
         >
             <Common.ContentSectionJustify>
-              <Content.ContentHeader1>프론트엔드 개발자 포트폴리오</Content.ContentHeader1>
-              <Content.ContentHeader3>안녕하세요.<br/> 새로운 도전을 환영하는 프론트엔드 개발자<br/> 김현수입니다.</Content.ContentHeader3>
+              <Content.ContentHeader1>ABOUT ME</Content.ContentHeader1>
+              <Content.ContentHeader3>저를 소개합니다</Content.ContentHeader3>
+              <div style={{position: 'absoulte', left: '50%'}}>
+                <Content.ContentHeader3>Scroll down</Content.ContentHeader3>
+              </div>
             </Common.ContentSectionJustify>
         </Common.ContentDiv>
     )

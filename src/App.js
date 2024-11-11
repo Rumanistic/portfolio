@@ -14,6 +14,8 @@ function App() {
   const [curPage, setCurPage] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const pageHeight = window.innerHeight;
+  let stackParam = '';
+  let stackColor = '';
 
   const scrollToPage = (pageIndex) => {
 
@@ -36,21 +38,32 @@ function App() {
     }, transitionDuration);
   };
 
+  const path = window.location.pathname;
+  if(path.startsWith('/frontend')) {
+    stackParam = 'front';
+    stackColor = '#FAF2DE'
+  }
+
+  if(path.startsWith('/backend')) {
+    stackParam = 'back';
+    stackColor = '#F0E8FF'
+  }
+
   useEffect(() => {
     scrollToPage(curPage);
   }, [])
 
   return (
     <Common.Application>
-      <AsideList curPage={curPage} onMenuClick={(value) => scrollToPage(value)} />
+      <AsideList curPage={curPage} onMenuClick={(value) => scrollToPage(value)} stackParam={stackParam} stackColor={stackColor} />
       <div ref={outerDivRef} style={{ overflow: 'hidden', height: '100vh' }}>
-        <Main onScrollEnd={() => scrollToPage(curPage + 1)}/>
-        <Aboutme onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} />
-        <Skills onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} />
-        <Popspot onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} />
-        <MediViewer onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} />
-        <Summary onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} />
-        <Contact onScrollReverse={() => scrollToPage(curPage - 1)} />
+        <Main onScrollEnd={() => scrollToPage(curPage + 1)} stackColor={stackColor}/>
+        <Aboutme onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} stackParam={stackParam} stackColor={stackColor}/>
+        <Skills onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} stackParam={stackParam} stackColor={stackColor}/>
+        <Popspot onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} stackParam={stackParam} stackColor={stackColor}/>
+        <MediViewer onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} stackParam={stackParam} stackColor={stackColor}/>
+        <Summary onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} stackParam={stackParam} stackColor={stackColor}/>
+        <Contact onScrollReverse={() => scrollToPage(curPage - 1)} stackColor={stackColor}/>
       </div>
     </Common.Application>
   );

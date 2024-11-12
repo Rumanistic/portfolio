@@ -18,11 +18,11 @@ function AsideList({curPage, onMenuClick, stackParam, stackColor}) {
             <nav>
                 <Common.MenuContainer onClick={goToMenu}>
                     <Common.MenuContent selected={selected === 1} value={1} stackColor={stackColor}>About me</Common.MenuContent>
-                    <Common.MenuContent selected={selected === 2} value={2} stackColor={stackColor}>Skills</Common.MenuContent>
-                    <Common.MenuContent selected={selected === 3} value={3} stackColor={stackColor}>Project: Popspot</Common.MenuContent>
-                    <Common.MenuContent selected={selected === 4} value={4} stackColor={stackColor}>Project: Mediviewer</Common.MenuContent>
-                    <Common.MenuContent selected={selected === 5} value={5} stackColor={stackColor}>Summary</Common.MenuContent>
-                    <Common.MenuContent selected={selected === 6} value={6} stackColor={stackColor}>Contact</Common.MenuContent>
+                    {/* <Common.MenuContent selected={selected === 2} value={2} stackColor={stackColor}>Skills</Common.MenuContent> */}
+                    <Common.MenuContent selected={selected === 2} value={2} stackColor={stackColor}>Project: Popspot</Common.MenuContent>
+                    <Common.MenuContent selected={selected === 3} value={3} stackColor={stackColor}>Project: Mediviewer</Common.MenuContent>
+                    <Common.MenuContent selected={selected === 4} value={4} stackColor={stackColor}>Summary</Common.MenuContent>
+                    <Common.MenuContent selected={selected === 5} value={5} stackColor={stackColor}>Contact</Common.MenuContent>
                 </Common.MenuContainer>
             </nav>
         </Common.ContentAside>

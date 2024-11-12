@@ -16,6 +16,7 @@ function App() {
   const pageHeight = window.innerHeight;
   let stackParam = '';
   let stackColor = '';
+  let stackAsideColor = '';
 
   const scrollToPage = (pageIndex) => {
 
@@ -41,12 +42,14 @@ function App() {
   const path = window.location.hash;
   if(path.startsWith('#/frontend')) {
     stackParam = 'front';
-    stackColor = '#FAF2DE'
+    stackColor = '#FAF2DE';
+    stackAsideColor = '#ffac46';
   }
 
   if(path.startsWith('#/backend')) {
     stackParam = 'back';
     stackColor = '#F0E8FF'
+    stackAsideColor = '';
   }
 
   useEffect(() => {
@@ -55,11 +58,11 @@ function App() {
 
   return (
     <Common.Application>
-      <AsideList curPage={curPage} onMenuClick={(value) => scrollToPage(value)} stackParam={stackParam} stackColor={stackColor} />
+      <AsideList curPage={curPage} onMenuClick={(value) => scrollToPage(value)} stackParam={stackParam} stackColor={stackColor} stackAsideColor={stackAsideColor}/>
       <div ref={outerDivRef} style={{ overflow: 'hidden', height: '100vh' }}>
         <Main onScrollEnd={() => scrollToPage(curPage + 1)} stackColor={stackColor}/>
         <Aboutme onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} stackParam={stackParam} stackColor={stackColor}/>
-        <Skills onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} stackParam={stackParam} stackColor={stackColor}/>
+        {/* <Skills onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} stackParam={stackParam} stackColor={stackColor}/> */}
         <Popspot onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} stackParam={stackParam} stackColor={stackColor}/>
         <MediViewer onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} stackParam={stackParam} stackColor={stackColor}/>
         <Summary onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} stackParam={stackParam} stackColor={stackColor}/>

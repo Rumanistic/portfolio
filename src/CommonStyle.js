@@ -15,8 +15,8 @@ export const ContentAside = styled.aside`
   width: 15vw;
   height: 100vh;
   display: flex;
-  background-color: #6e6e6e;
-  color: #eeeeee;
+  background-color: #ffac46;
+  color: #000000;
   flex-flow: column;
 `;
 
@@ -45,13 +45,13 @@ export const ContainerText = styled.p`
 export const MenuContainer = styled.ul`
     text-align: left;
     list-style: none;
-    padding-left: 3vw;
+    padding-left: 2.4vw;
 `;
 
 // 메뉴 스타일링
 export const MenuContent = styled.li`
   font-family: 'jua-regular';
-  padding: 0.2vh 0;
+  padding: 0.2vh 0.8vw;
   font-size: 1.2vmin;
   ${(props) => (props.selected && `background-color: ${props.stackColor}; color: #000000; font-size: 2.5vmin`)};
   cursor: pointer;
@@ -86,4 +86,8 @@ export const ContentSectionJustify = styled.section`
   justify-content: space-evenly;
   padding: 0 2vw;
   height: 100vh;
+`;
+
+export const PageSpliter = styled.div`
+  min-height: 5vh;
 `;

@@ -43,13 +43,13 @@ function App() {
   if(path.startsWith('#/frontend')) {
     stackParam = 'front';
     stackColor = '#FAF2DE';
-    stackAsideColor = '#ffac46';
+    stackAsideColor = '#FFAC46';
   }
 
   if(path.startsWith('#/backend')) {
     stackParam = 'back';
     stackColor = '#F0E8FF'
-    stackAsideColor = '';
+    stackAsideColor = '#A280E8';
   }
 
   useEffect(() => {
@@ -65,8 +65,8 @@ function App() {
         {/* <Skills onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} stackParam={stackParam} stackColor={stackColor}/> */}
         <Popspot onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} stackParam={stackParam} stackColor={stackColor}/>
         <MediViewer onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} stackParam={stackParam} stackColor={stackColor}/>
-        <Summary onScrollEnd={() => scrollToPage(curPage + 1)} onScrollReverse={() => scrollToPage(curPage - 1)} stackParam={stackParam} stackColor={stackColor}/>
-        <Contact onScrollReverse={() => scrollToPage(curPage - 1)} stackColor={stackColor}/>
+        <Summary onScrollReverse={() => scrollToPage(curPage - 1)} stackParam={stackParam} stackColor={stackColor}/>
+        {/* <Contact onScrollReverse={() => scrollToPage(curPage - 1)} stackColor={stackColor}/> */}
       </div>
     </Common.Application>
   );

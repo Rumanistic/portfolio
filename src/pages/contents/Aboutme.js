@@ -95,7 +95,7 @@ function Aboutme({onScrollEnd, onScrollReverse, stackParam, stackColor}) {
                 <Content.ContentInnerText>서울특별시 종로구</Content.ContentInnerText>
               </Content.VerticalSpan>
 
-              <Content.Icons src='./resources/images/icons/phone.png'></Content.Icons>
+              <Content.Icons src='./resources/images/icons/phonecall.png'></Content.Icons>
               <Content.VerticalSpan>
                 <Content.ContentHeader5>연락처</Content.ContentHeader5>
                 <Content.ContentInnerText>010-9890-1388</Content.ContentInnerText>

@@ -9,56 +9,93 @@ function MediViewerFront() {
 
   const imgSlide = ['./resources/images/listStoryboard.png', './resources/images/list_todo_241014.png', './resources/images/design_guide.png', './resources/images/mediviewer_list.png']
 
-const tagsInputJscode = `  
-function ShowTag({tags, setList}){
-  const [values, setValues] = useState(
-    Array(tags.length).fill(false));
-  const [selectedTags, setSelectedTags] = useState([]);
-
-  const toggle = (e, i) => {
-  const valueToggle = [...values];
-  let selected = [...selectedTags];
-  valueToggle[i] = !valueToggle[i];
-  setValues(valueToggle);
-  if(valueToggle[i]){
-  	selected.push(e);
-  } else {
-  	selected = selected.filter(
-    (queryTag)=> queryTag !== e
-  	);
-  	console.log(selected);
-  }
-  setSelectedTags(selected);
+const setParamsJscode = `function setParams() {
+	const pid = $("#pid").val();
+	const pname = $("#pname").val();
+	const modality = $("#modality").val();
+	const state = parseInt($("#status").val(), 10);
+	const slice = parseInt($("#slice").val(), 10);
+	const nowPage = 1;
+	const date = [];
+	
+	const param = {
+		pid,
+		pname,
+		modality,
+		state,
+		slice,
+		nowPage,
+		sdate: date[0],
+		edate: date[1]
 	}
-	...
-};
+	
+	return param;
+}`;
+
+const studySelectJscode = `// 리스트 항목 선택
+$(document).on('click', 'li[name=listItem]', (e) => {
+    prevStudyKey = 
+			$(e.target).closest('li[name=listItem]')
+				.attr('value');
+    const pID = 
+			$(e.target).closest('li[name=listItem]')
+				.find('span[name=pID]').text();
+    const pName = 
+			$(e.target).closest('li[name=listItem]')
+				.find('span[name=pName]').text();
+    
+    const params = {
+		studyKey: prevStudyKey,
+		pid: pID,
+		pname: pName
+	}
+    getHistoryList(params); 
+    showPreviewData(prevStudyKey);
+});
+
+// dicom 프리뷰
+function showPreviewData(studyKey) {
+	const element = document.getElementById('previewImage');
+	cornerstone.enable(element);
+	
+	getImgPreview(studyKey, element);
+}
 `;
 
-const starPointJscode = `
-return (
-  <EventListSpan>
-    {eList.map((e, i) => {
-      return(
-        <Col12 onClick={() => 
-          {navigate(\`/event/\${e.eventNo}\`)}} 
-            key={e.eventNo}>
-          ...
-          <span style={{alignSelf: "center"}}>{
-          rPoint[e.eventNo] ? 
-            StarPoint(rPoint[e.eventNo]) 
-            : StarPoint(0.0)}
-            </span>
-            <span style={{alignSelf:'center'}}>{
-            rPoint[e.eventNo] ? 
-              \`리뷰 평점 : 
-              \${rPoint[e.eventNo].toFixed(1)} / 5.0\` : 
-              '등록된 리뷰가 없습니다.'}</span> 
-          </span>
-        </Col12>
-      )
-    })}
-  </EventListSpan>
-)
+const setPreviewJscode = `const getPreviewSeries = (studykey) => {
+	axios.get(\`/api/lists/preview/\${studykey}/series\`)
+		.then(response => {
+			let currentIndex = 0;
+			...
+			const rData = response.data;
+			testImgItems.splice(0, testImgItems.length);
+			testImgItems.push(...rData.imageFileName);
+			...
+			displayImage(currentIndex);
+			
+			function displayImage(index) {
+		        ...
+		    }
+		    ...			
+			// axios 체이닝 - comment 가져오기
+		return axios.get(\`/api/lists/comment/\${studykey}\`);
+		})
+		.then(response => {
+			const rData = response.data;
+			
+			const section = 
+				document.querySelector("#commentContainer");
+			section.innerHTML = "";
+	
+			const head = document.createElement("h3");
+			head.textContent = "Comment";
+			section.appendChild(head);
+			
+			const p = document.createElement("p");
+			p.textContent = rData.comment;
+			section.appendChild(p);
+		});
+}
 `;
 
 	return (
@@ -94,24 +131,24 @@ return (
 			<Content.ContentDivSpan direction='horizontal' length='0.5vh' color='#777777' />
 			<Content.HorizontalSpan>
 				<Content.VerticalSpan>
-					<img src={`${process.env.PUBLIC_URL}/resources/images/setTags.gif`} alt=''></img>
+					<img src={`${process.env.PUBLIC_URL}/resources/images/textSearchQuery.gif`} alt=''></img>
 					<Content.ContentDivSpan direction='horizontal' length='0.1vh' color='#777777' />
-					<img src={`${process.env.PUBLIC_URL}/resources/images/searchByTags.gif`} alt=''></img>
+					<img src={`${process.env.PUBLIC_URL}/resources/images/dateSearchQuery.gif`} alt=''></img>
 				</Content.VerticalSpan>
 
 				<Content.ContentDivSpan direction='vertical' length='0.1vw' color='#777777' />
 
 				<Content.VerticalSpan style={{justifyContent: 'center'}}>
-					<Content.ContentHeader6>#1. 제가 원하는 종류의 글만 보고 싶어요!</Content.ContentHeader6>
+					<Content.ContentHeader6>#1. 제가 원하는 조건으로 검색해서 보고싶어요!</Content.ContentHeader6>
 					<Content.ContentInnerText>
 						<br/>
-						사용자가 원하는 종류의 태그에만 접근할 수 있도록<br/> 
-						모든 게시글에 한개 이상, 5개 이하의 태그를 부여할 수 있고,<br/>
-						사용자는 리스트 페이지에서 좌측 Tags 영역에서<br/>
-						원하는 태그를 선택하여 볼 수 있습니다.
+						사용자가 원하는 항목으로 검색이 가능하도록<br/> 
+						화면 리스트 상단 검색창에 입력한 항목에 대해<br/>
+						모두 일치하는 항목을 검색해서 볼 수 있으며<br/>
+						좌측 어사이드 메뉴에서 기간 선택으로 기간 검색도 가능합니다.
 					</Content.ContentInnerText>
 					<SyntaxHighlighter language="javascript" style={vscDarkPlus}>
-						{tagsInputJscode}
+						{setParamsJscode}
 					</SyntaxHighlighter>
 				</Content.VerticalSpan>
 			</Content.HorizontalSpan>
@@ -120,25 +157,49 @@ return (
 
 			<Content.HorizontalSpan>
 				<Content.VerticalSpan style={{justifyContent: 'center'}}>
-					<Content.ContentHeader6>#2. 등록된 행사 리뷰의 평균 평점을 보고싶어요!</Content.ContentHeader6>
+					<Content.ContentHeader6>#2. 조회하려는 환자의 과거 이력을 함께 확인하고 싶어요!</Content.ContentHeader6>
 					<Content.ContentInnerText>
 						<br/>
-						행사 리스트 화면에 각 행사에 달린 리뷰의 평균 평점을 표시합니다.<br/>
-						리뷰가 없는 행사는 "등록된 리뷰가 없습니다"로 나타나며,<br/>
-						리뷰가 하나 이상 있는 경우에는 평균 평점을<br/>
-						0.5점 단위의 별점 이미지로 보여줍니다.
+						검색한 환자의 검진 데이터를 선택하면<br/> 
+						하단에 과거 검사 이력과 함께 선택한 검진 데이터가 표시됩니다.<br/> 
+						과거 이력을 통해서도 검진 데이터를 미리 볼 수 있습니다.
 					</Content.ContentInnerText>
 					<SyntaxHighlighter language="javascript" style={vscDarkPlus}>
-						{starPointJscode}
+						{studySelectJscode}
 					</SyntaxHighlighter>
 				</Content.VerticalSpan>
 
 				<Content.ContentDivSpan direction='vertical' length='0.1vw' color='#777777' />
 
 				<Content.VerticalSpan>
-					<img src={`${process.env.PUBLIC_URL}/resources/images/showRPoint.gif`} alt=''></img>
+					<img src={`${process.env.PUBLIC_URL}/resources/images/selectListData.gif`} alt=''></img>
 					<Content.ContentDivSpan direction='horizontal' length='0.1vh' color='#777777' />
-					<img src={`${process.env.PUBLIC_URL}/resources/images/ratingAndShowResult.gif`} alt=''></img>
+					<img src={`${process.env.PUBLIC_URL}/resources/images/selectHistData.gif`} alt=''></img>
+				</Content.VerticalSpan>
+			</Content.HorizontalSpan>
+
+			<Content.ContentDivSpan direction='horizontal' length='0.5vh' color='#777777' />
+			
+			<Content.HorizontalSpan>
+				<Content.VerticalSpan>
+					<img src={`${process.env.PUBLIC_URL}/resources/images/prevWithComments.gif`} alt=''></img>
+					<Content.ContentDivSpan direction='horizontal' length='0.1vh' color='#777777' />
+					<img src={`${process.env.PUBLIC_URL}/resources/images/prevNoComments.gif`} alt=''></img>
+				</Content.VerticalSpan>
+
+				<Content.ContentDivSpan direction='vertical' length='0.1vw' color='#777777' />
+
+				<Content.VerticalSpan style={{justifyContent: 'center'}}>
+					<Content.ContentHeader6>#3. 리스트에서 검진 내용을 미리 보고 싶어요!</Content.ContentHeader6>
+					<Content.ContentInnerText>
+						<br/>
+						리스트 페이지 우측 하단의 썸네일을 클릭하여<br/> 
+						검진 결과를 미리 확인할 수 있으며,<br/> 
+						작성된 코멘트도 함께 확인 가능합니다.
+					</Content.ContentInnerText>
+					<SyntaxHighlighter language="javascript" style={vscDarkPlus}>
+						{setPreviewJscode}
+					</SyntaxHighlighter>
 				</Content.VerticalSpan>
 			</Content.HorizontalSpan>
 		</Content.VerticalSpan>

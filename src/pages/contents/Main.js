@@ -34,7 +34,6 @@ function Main({onScrollEnd, stackColor}) {
               <Content.ContentHeader1>ABOUT ME</Content.ContentHeader1>
               <Content.ContentHeader3>저를 소개합니다</Content.ContentHeader3>
               <div style={{position: 'absoulte', left: '50%'}}>
-                <Content.ContentHeader3>Scroll down</Content.ContentHeader3>
               </div>
             </Common.ContentSectionJustify>
         </Common.ContentDiv>

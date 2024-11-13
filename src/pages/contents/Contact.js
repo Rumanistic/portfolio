@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import * as Common from '../../CommonStyle';
 
-function Contact({onScrollReverse}) {
+function Contact({onScrollReverse, stackColor}) {
     const contentRef = useRef();
 
     const handleWheel = (e) => {
@@ -28,8 +28,9 @@ function Contact({onScrollReverse}) {
         <Common.ContentDiv
             ref={contentRef}
             onWheel={handleWheel}
+            stackColor={stackColor}
         >
-        <div className="Content">Skills</div>
+        <div className="Content">Contact at...</div>
         </Common.ContentDiv>
     )
 }

@@ -15,7 +15,7 @@ export const ContentAside = styled.aside`
   width: 15vw;
   height: 100vh;
   display: flex;
-  background-color: #ffac46;
+  background-color: ${(props) => props.stackAsideColor};
   color: #000000;
   flex-flow: column;
 `;

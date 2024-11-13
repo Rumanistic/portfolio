@@ -4,10 +4,16 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 function PopspotBack() {
 
-const tagsInputJava = `  
+const tagsInputJava = `// 모든 삭제되지 않은 태그 데이터를 가져옴
+@Query(value = "select tags from event 
+	where is_deleted = 0", nativeQuery = true)
+List<String> findAllBy();
+
 public String getAllTags() {
+	// Data Format: {"tags,tags,tags" , ... }
 	List<String> tagsList = eventRepository.findAllBy();
 	Set<String> tags = new HashSet<String>();
+	// 중복된 태그를 걸러내기 위해 HashSet에 요소 추가
 	for(String s : tagsList) {
 		String[] temp = s.split(",");
 		tags.addAll(Arrays.asList(temp));
@@ -17,8 +23,7 @@ public String getAllTags() {
 };
 `;
 
-const reviewPointJava = `
-@Query(value = "
+const reviewPointJava = `@Query(value = "
   select r.event_no as eventNo, 
     avg(r.rating) as reviewPointAvg 
   from review r 

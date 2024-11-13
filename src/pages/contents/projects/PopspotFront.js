@@ -5,40 +5,44 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 function PopspotFront() {
 	
 
-const tagsInputJscode = `  
-function ShowTag({tags, setList}){
+const tagsInputJscode = `function ShowTag({tags, setList}){
+	// 태그가 선택되었는지 체크하기위한 Flag(true/false) 배열
   const [values, setValues] = useState(
     Array(tags.length).fill(false));
+	// 선택된 태그 String 데이터를 담을 배열
   const [selectedTags, setSelectedTags] = useState([]);
 
   const toggle = (e, i) => {
-  const valueToggle = [...values];
-  let selected = [...selectedTags];
-  valueToggle[i] = !valueToggle[i];
-  setValues(valueToggle);
-  if(valueToggle[i]){
-  	selected.push(e);
-  } else {
-  	selected = selected.filter(
-    (queryTag)=> queryTag !== e
-  	);
-  	console.log(selected);
-  }
-  setSelectedTags(selected);
+		// 배열을 복사해서 사용
+		const valueToggle = [...values];
+		let selected = [...selectedTags];
+		valueToggle[i] = !valueToggle[i];
+		setValues(valueToggle);
+		if(valueToggle[i]){
+			// 선택되었을 시 배열에 요소 삽입
+			selected.push(e);
+		} else {
+		 	// 해제되었을 시 배열에서 요소 제거
+			selected = selected.filter(
+			(queryTag)=> queryTag !== e
+			);
+		}
+  	setSelectedTags(selected);
 	}
 	...
 };
 `;
 
-const starPointJscode = `
-return (
+const starPointJscode = `return (
   <EventListSpan>
+	{/* eList의 요소로 반복 */}
     {eList.map((e, i) => {
       return(
         <Col12 onClick={() => 
           {navigate(\`/event/\${e.eventNo}\`)}} 
             key={e.eventNo}>
           ...
+			{/* rPoint 요소에서 eventNo 탐색 */}
           <span style={{alignSelf: "center"}}>{
           rPoint[e.eventNo] ? 
             StarPoint(rPoint[e.eventNo]) 

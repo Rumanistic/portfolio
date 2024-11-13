@@ -177,3 +177,16 @@ export const NextImg = styled.span`
   }
   transition: background-color 0.3s ease;
 `;
+
+export const ContentContainer = styled.div`
+    display: flex;
+    flex-flow: column;
+`;
+
+export const ContentContactGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 2fr 1fr 2fr;
+  grid-template-rows: 1fr;
+  gap: 2vw 1vh;
+  align-items: center;
+`;
